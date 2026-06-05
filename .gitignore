@@ -67,3 +67,9 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# Custom Editor and OS rules
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
