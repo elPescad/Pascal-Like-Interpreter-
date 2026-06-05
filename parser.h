@@ -1,0 +1,46 @@
+/* 
+ * parser.h
+ * Programming Assignment 2
+ * Spring 2026
+*/
+
+#ifndef PARSER_H_
+#define PARSER_H_
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+#include "lexSP26.h"
+#include "val_SP26.h"
+
+extern bool Prog(istream& in, int& line);
+extern bool Block(istream& in, int& line);
+extern bool ConstPart(istream& in, int& line);
+extern bool DeclPart(istream& in, int& line);
+extern bool VarPart(istream& in, int& line);
+extern bool ConstDef(istream& in, int& line);
+extern bool DeclStmt(istream& in, int& line);
+extern bool Stmt(istream& in, int& line, bool execute);
+extern bool StructuredStmt(istream& in, int& line, bool execute);
+extern bool CompStmt(istream& in, int& line, bool execute);
+extern bool SimpleStmt(istream& in, int& line, bool execute);
+extern bool WriteLnStmt(istream& in, int& line, bool execute);
+extern bool WriteStmt(istream& in, int& line, bool execute);
+extern bool ReadLnStmt(istream& in, int& line, bool execute);
+extern bool IfStmt(istream& in, int& line, bool execute);
+extern bool AssignStmt(istream& in, int& line, bool execute);
+extern bool Variable(istream& in, int& line);
+extern bool ExprList(istream& in, int& line, bool execute);
+extern bool Expr(istream& in, int& line, Value& val, bool execute);
+extern bool Type(istream& in, int& line);
+extern bool IdentList(istream& in, int& line, vector<string>& vec);
+extern bool VarList(istream& in, int& line, bool execute);
+extern bool SimpleExpr(istream& in, int& line, Value& val, bool execute);
+extern bool Term(istream& in, int& line, Value& val, bool execute);
+extern bool SFactor(istream& in, int& line, Value& val, bool execute);
+extern bool Factor(istream& in, int& line, int sign, Value& val, bool execute);
+extern int ErrCount();
+
+#endif /* PARSE_H_ */
