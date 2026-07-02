@@ -64,6 +64,57 @@ The `Value` object acts as a generic type variant, enabling dynamic runtime exec
 > The expression architecture restricts consecutive relational operators to safeguard logic flows. Writing code like `if x > y > z then` will generate an instantaneous `Illegal Relational Expression` error.
 
 ---
+## Local Testing & Execution
+
+To see the hybrid execution engine and custom language quirks in action, you can create a test script. This file explicitly tests the recursive descent PEMDAS cascading, implicit type promotion, control flow dead-branch skipping, and the unique unary string trimming feature.
+
+**1. Create a file named `test.pas`:**
+```pascal
+var 
+    baseInt : integer;
+    multiplier : real;
+    target : string;
+begin
+    { 1. Math & Implicit Type Widening (Int -> Real promotion) }
+    baseInt := 10;
+    multiplier := 2.5;
+    
+    { Cascading PEMDAS: Evaluates as (2.5 * 2) + 10 = 15.00 }
+    multiplier := multiplier * 2 + baseInt;
+
+    { 2. Testing the Unique Unary Trim Quirk }
+    { Applies the overloaded unary minus to erase trailing whitespace }
+    target := -' Big Tech     '; 
+    
+    { 3. Control Flow Execution & State Management }
+    if multiplier > 10.0 then
+    begin
+        { The interpreter executes this, while skipping dead branches }
+        baseInt := 1;
+    end
+end.
+```
+
+**2. Compile the interpreter and run the script:**
+
+**Windows (MinGW/GCC):**
+```bash
+# Compile the core engine, parser, and type variant logic
+g++ main.cpp parser.cpp val.cpp -o interpreter
+
+# Execute the test script
+./interpreter.exe test.pas
+```
+
+**Linux (GCC):**
+```bash
+# Compile with C++17 standard
+g++ -std=c++17 main.cpp parser.cpp val.cpp -o interpreter
+
+# Execute the test script
+./interpreter test.pas
+```
+---
 
 ## File Manifest
 
