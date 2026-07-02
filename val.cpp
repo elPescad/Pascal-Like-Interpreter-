@@ -9,7 +9,7 @@ using namespace std;
 #include <cmath>
 #include <sstream>
 
-#include "val_SP26.h"
+#include "val.h"
 
 
 // numeric overloaded add this to op

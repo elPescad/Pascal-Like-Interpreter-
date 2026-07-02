@@ -12,8 +12,8 @@
 
 using namespace std;
 
-#include "lexSP26.h"
-#include "val_SP26.h"
+#include "lex.h"
+#include "val.h"
 
 extern bool Prog(istream& in, int& line);
 extern bool Block(istream& in, int& line);

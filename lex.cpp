@@ -1,5 +1,5 @@
 /*
- * lexSP26.cpp
+ * lex.cpp
  * Lexical Analyzer for Pascal-Like Language
  * CS280 - Spring 2026
  */
@@ -10,7 +10,7 @@
 using std::map;
 using namespace std;
 
-#include "lexSP26.h"
+#include "lex.h"
 
 LexItem id_or_kw(const string& lexeme , int linenum)
 {
@@ -144,13 +144,16 @@ LexItem getNextToken(istream& in, int& linenum)
 	char ch, nextch, nextchar, prevch;
 	Token tt;
 		
+		       
+	//cout << "in getNestToken" << endl;
     while(in.get(ch)) {
-    	
+    	//cout << "in while " << ch << endl;
 		switch( lexstate ) {
 		case START:
 			if( ch == '\n' )
 			{
 				linenum++;
+				//cout << linenum << endl;
 			}	
                 
 			if( isspace(ch) )
@@ -161,22 +164,27 @@ LexItem getNextToken(istream& in, int& linenum)
 			if( isalpha(ch) ) {
 				lexeme = ch;
 				lexstate = INID;
+				//cout << "in ID " << endl;
 			}
 			else if( ch == '\'' ) {
 				lexstate = INSTRING;
+				
 			}
 			
 			else if( isdigit(ch) ) {
 				lexstate = ININT;
 			}
 			else if( ch == '{' ) {
+				//lexeme += ch;
 				lexstate = INCOMMENT1;
+				
 			}
 			else if(ch == '(' && in.peek() == '*')
 			{
 				lexstate = INCOMMENT2;
 				in.get(ch); 
 				lexeme += ch;
+				
 			}				
 			else {
 				tt = ERR;
@@ -207,6 +215,7 @@ LexItem getNextToken(istream& in, int& linenum)
 						tt = ASSOP;
 						break;
 					}
+					//error
 					break;
 				
 				case '=':
@@ -253,11 +262,14 @@ LexItem getNextToken(istream& in, int& linenum)
 		case INID:
 			if( isalpha(ch) || isdigit(ch) || ch == '_' || ch == '$') {
 							
+				//cout << "in id continued" << ch << endl;
 				lexeme += ch;
 			}
 			else {
 				in.putback(ch);
+				//cout << lexeme << endl;
 				return id_or_kw(lexeme, linenum);
+				
 			}
 			break;
 					
@@ -268,6 +280,11 @@ LexItem getNextToken(istream& in, int& linenum)
 			}
 			lexeme += ch;
 			if( ch == '\'' ) {
+				if(lexeme.length() == 3)
+				{
+					lexeme = lexeme.substr(1, lexeme.length()-2);
+					return LexItem(CCONST, lexeme, linenum);
+				}
 				lexeme = lexeme.substr(1, lexeme.length()-2);
 				return LexItem(SCONST, lexeme, linenum);
 			}
@@ -309,6 +326,7 @@ LexItem getNextToken(istream& in, int& linenum)
 				}
 				else if(nextch == 'E' || nextch == 'e')
 				{
+					//Invalid floating-point constant with exponent
 					lexeme += ch;
 					in.get(ch);
 					lexeme += ch;
@@ -362,6 +380,7 @@ LexItem getNextToken(istream& in, int& linenum)
 				linenum++;
 				
 			else if( ch == '}' ) {
+               	//in.get(ch);
                	lexeme += ch;
                	lexstate = START;
 			}
