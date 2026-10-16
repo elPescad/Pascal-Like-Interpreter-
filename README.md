@@ -1,5 +1,5 @@
 # Custom Interpreter & Hybrid Syntax Analyzer
-### Programming Assignment 2 — Spring 2026
+### Programming Assignment — Spring 2026
 
 ## Overview
 This project implements a robust, single-pass **Recursive Descent Parser and Hybrid Execution Engine** for a strongly typed, block-structured language. Unlike a traditional multi-pass compiler that splits parsing and interpretation into disconnected phases, this engine utilizes contextual status flags (`execute` / `condition`) to validate language grammar while simultaneously processing live runtime execution, console I/O, and variable state mutation.
